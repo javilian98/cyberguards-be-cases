@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Case {
+  id              String   @id @unique @default(uuid())
+  title           String
+  description     String
+  risk_status     String
+  risk_score      Int 
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+  assignee        User?    @relation(fields: [assignee_id], references: [id], onDelete: SetNull)
+  assignee_id     String?   
+  assigned_at     DateTime @default(now())
+  threat_page_url String
+}
+
+model User {
+  id              String   @id @unique @default(uuid())
+  firstname       String
+  lastname        String
+  role            Int      @default(0) // 0: normal user, 1: analyst, 2: admin
+  cases           Case[]
+  risk_score      Int      @default(0)
+  suspect         Int      @default(0)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+}
