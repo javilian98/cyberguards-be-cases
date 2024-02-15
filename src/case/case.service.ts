@@ -3,9 +3,9 @@ import { db } from "../utils/db.server";
 type Case = {
   title: string;
   description: string;
-  risk_status: string;
-  risk_score: number;
-  threat_page_url: string;
+  riskStatus: string;
+  riskScore: number;
+  threatPageUrl: string;
 };
 
 export const getCaseList = async ({
@@ -20,10 +20,10 @@ export const getCaseList = async ({
       id: true,
       title: true,
       description: true,
-      risk_status: true,
-      risk_score: true,
-      threat_page_url: true,
-      created_at: true,
+      riskStatus: true,
+      riskScore: true,
+      threatPageUrl: true,
+      createdAt: true,
     },
     skip,
     take,
@@ -39,24 +39,23 @@ export const getCase = async (id: string): Promise<Case | null> => {
 };
 
 export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
-  const { title, description, risk_status, risk_score, threat_page_url } =
-    caseItem;
+  const { title, description, riskStatus, riskScore, threatPageUrl } = caseItem;
 
   return db.case.create({
     data: {
       title,
       description,
-      risk_status,
-      risk_score,
-      threat_page_url,
+      riskStatus,
+      riskScore,
+      threatPageUrl,
     },
     select: {
       id: true,
       title: true,
       description: true,
-      risk_status: true,
-      risk_score: true,
-      threat_page_url: true,
+      riskStatus: true,
+      riskScore: true,
+      threatPageUrl: true,
     },
   });
 };
@@ -65,8 +64,7 @@ export const updateCase = async (
   caseItem: Omit<Case, "id">,
   id: string
 ): Promise<Case> => {
-  const { title, description, risk_status, risk_score, threat_page_url } =
-    caseItem;
+  const { title, description, riskStatus, riskScore, threatPageUrl } = caseItem;
 
   return db.case.update({
     where: {
@@ -75,17 +73,17 @@ export const updateCase = async (
     data: {
       title,
       description,
-      risk_status,
-      risk_score,
-      threat_page_url,
+      riskStatus,
+      riskScore,
+      threatPageUrl,
     },
     select: {
       id: true,
       title: true,
       description: true,
-      risk_status: true,
-      risk_score: true,
-      threat_page_url: true,
+      riskStatus: true,
+      riskScore: true,
+      threatPageUrl: true,
     },
   });
 };
