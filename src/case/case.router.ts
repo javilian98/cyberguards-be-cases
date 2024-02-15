@@ -19,7 +19,7 @@ caseRouter.get(
     .toInt()
     .withMessage("Take must be a number")
     .isInt({ max: 50 })
-    .withMessage("Take must be less than or equal to 50"),
+    .withMessage("Take must be less than or equal to 50."),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
