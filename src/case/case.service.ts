@@ -24,6 +24,7 @@ export const getCaseList = async ({
       riskScore: true,
       threatPageUrl: true,
       createdAt: true,
+      assignedAt: true,
     },
     skip,
     take,

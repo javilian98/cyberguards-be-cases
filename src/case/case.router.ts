@@ -58,9 +58,9 @@ caseRouter.post(
   "/",
   body("title").isString(),
   body("description").isString(),
-  body("risk_status").isString(),
-  body("risk_score").isNumeric(),
-  body("threat_page_url").isString(),
+  body("riskStatus").isString(),
+  body("riskScore").isNumeric(),
+  body("threatPageUrl").isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -84,9 +84,9 @@ caseRouter.post(
   "/",
   body("title").isString(),
   body("description").isString(),
-  body("risk_status").isString(),
-  body("risk_score").isNumeric(),
-  body("threat_page_url").isString(),
+  body("riskStatus").isString(),
+  body("riskScore").isNumeric(),
+  body("threatPageUrl").isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -110,9 +110,9 @@ caseRouter.put(
   "/:id",
   body("title").isString(),
   body("description").isString(),
-  body("risk_status").isString(),
-  body("risk_score").isNumeric(),
-  body("threat_page_url").isString(),
+  body("riskStatus").isString(),
+  body("riskScore").isNumeric(),
+  body("threatPageUrl").isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -126,6 +126,7 @@ caseRouter.put(
         caseItem,
         request.params.id
       );
+
       return response.status(200).json(updatedCase);
     } catch (error: any) {
       return response.status(500).json(error.message);

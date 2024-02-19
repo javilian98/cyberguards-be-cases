@@ -6,64 +6,54 @@ type Case = {
   riskStatus: string;
   riskScore: number;
   threatPageUrl: string;
+  assigneeId?: string;
 };
 
-type User = {
-  firstName: string;
-  lastName: string;
-  role: number;
-  riskScore: number;
-  suspect: number;
-};
+// function getSuspectCases(): SuspectCase[] {
+//   return [
+//     {
+//       title: "after hour login",
+//     },
+//     {
+//       title: "potential account sharing",
+//     },
+//     {
+//       title: "terminated employee login",
+//     },
+//     {
+//       title: "failed attempt to enter building",
+//     },
+//     {
+//       title: "impossible traveller",
+//     },
+//     {
+//       title: "potential data exfiltration",
+//     },
+//   ];
+// }
 
 function getCases(): Case[] {
   return [
     {
       title: "Case 1",
       description: "Case 1 description",
-      riskStatus: "High",
+      riskStatus: "high",
       riskScore: 85,
       threatPageUrl: "https://youtube.com",
     },
     {
       title: "Case 2",
       description: "Case 2 description",
-      riskStatus: "Medium",
+      riskStatus: "medium",
       riskScore: 45,
       threatPageUrl: "https://youtube.com",
     },
     {
       title: "Case 3",
       description: "Case 3 description",
-      riskStatus: "Low",
+      riskStatus: "low",
       riskScore: 23,
       threatPageUrl: "https://youtube.com",
-    },
-  ];
-}
-
-function getUsers(): User[] {
-  return [
-    {
-      firstName: "John",
-      lastName: "Doe",
-      role: 0,
-      riskScore: 0,
-      suspect: 0,
-    },
-    {
-      firstName: "Alice",
-      lastName: "Doe",
-      role: 1,
-      riskScore: 0,
-      suspect: 0,
-    },
-    {
-      firstName: "Bob",
-      lastName: "Doe",
-      role: 2,
-      riskScore: 0,
-      suspect: 0,
     },
   ];
 }
@@ -82,22 +72,7 @@ async function seed() {
             riskStatus,
             riskScore,
             threatPageUrl,
-          },
-        });
-      })
-    );
-
-    await Promise.all(
-      getUsers().map((row) => {
-        const { firstName, lastName, role, riskScore, suspect } = row;
-
-        return db.user.create({
-          data: {
-            firstName,
-            lastName,
-            role,
-            riskScore,
-            suspect,
+            // assigneeId: user1?.id,
           },
         });
       })

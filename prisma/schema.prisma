@@ -14,24 +14,17 @@ model Case {
   id              String   @id @unique @default(uuid())
   title           String
   description     String
-  riskStatus     String
-  riskScore      Int 
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  assignee        User?    @relation(fields: [assigneeId], references: [id], onDelete: SetNull)
-  assigneeId     String?   
-  assignedAt     DateTime @default(now())
-  threatPageUrl String
+  riskStatus      String
+  riskScore       Int 
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  assigneeId      String?  
+  assignedAt      DateTime?
+  suspectedUserId String?
+  threatPageUrl   String
 }
 
-model User {
-  id              String   @id @unique @default(uuid())
-  firstName       String
-  lastName        String
-  role            Int      @default(0) // 0: normal user, 1: analyst, 2: admin
-  cases           Case[]
-  riskScore      Int      @default(0)
-  suspect         Int      @default(0)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-}
+// model SuspectCase {
+//   id Int        @id @unique
+//   title String      @unique
+// }
