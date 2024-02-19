@@ -1,0 +1,21 @@
+services:
+  ####################################
+  # mysql database
+  ####################################
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cyberguards_db_cases
+
+  ##################################
+  # Pytest on Games Service
+  ##################################
+  case_service:
+    build:
+      context: ../
+      dockerfile: ci/Dockerfile.test
+    depends_on:
+      - mysql
+    environment:
+      CASE_DATABASE_URL: "mysql://root:root@mysql:3306/cyberguards_db_cases?schema=public"
