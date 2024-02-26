@@ -5,6 +5,8 @@ import { caseRouter } from "./case/case.router";
 
 dotenv.config();
 
+console.log("Case Service Port: ", process.env.CASE_SERVICE_PORT);
+
 if (!process.env.CASE_SERVICE_PORT) {
   process.exit(1);
 }
