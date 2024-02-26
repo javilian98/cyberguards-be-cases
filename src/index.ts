@@ -7,11 +7,11 @@ dotenv.config();
 
 console.log("Case Service Port: ", process.env.CASE_SERVICE_PORT);
 
-// if (!process.env.CASE_SERVICE_PORT) {
-//   process.exit(1);
-// }
+if (!process.env.CASE_SERVICE_PORT) {
+  process.exit(1);
+}
 
-const PORT: number = parseInt("10000" as string, 10);
+const PORT: number = parseInt(process.env.CASE_SERVICE_PORT as string, 10);
 
 export const app = express();
 
