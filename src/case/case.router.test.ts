@@ -17,16 +17,16 @@ describe("Case Routes", () => {
     // expect(res.body).toHaveLength(3); // Assuming there are 3 cases in the database
   });
 
-  it("GET api/cases/:id should get a single case", async () => {
-    const id = "6a6e61b3-ff3a-46f0-b898-a1aa3e40bff3"; // from database
-    const response = await request(app).get(`/api/cases/${id}`);
-    const data: CaseDetail = response.body;
+  // it("GET api/cases/:id should get a single case", async () => {
+  //   const id = "6a6e61b3-ff3a-46f0-b898-a1aa3e40bff3"; // replace id with the seeded data from test db
+  //   const response = await request(app).get(`/api/cases/${id}`);
+  //   const data: CaseDetail = response.body;
 
-    expect(response.status).toBe(200);
-    expect(typeof response.body).toBe("object");
-    expect(data.title).toBe("Case 1");
-    // expect(res.body).toHaveLength(3); // Assuming there are 3 cases in the database
-  });
+  //   expect(response.status).toBe(200);
+  //   expect(typeof response.body).toBe("object");
+  //   expect(data.title).toBe("Case 1");
+  //   // expect(res.body).toHaveLength(3); // Assuming there are 3 cases in the database
+  // });
 
   // // Test Case for DELETE /cases/:id
   // it("DELETE /cases/:id should delete an existing case and return status code 204", async () => {

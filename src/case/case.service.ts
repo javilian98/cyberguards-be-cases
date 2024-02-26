@@ -5,6 +5,7 @@ type Case = {
   description: string;
   riskStatus: string;
   riskScore: number;
+  assigneeId: string | null;
   threatPageUrl: string;
 };
 
@@ -15,13 +16,14 @@ export const getCaseList = async ({
   skip?: number; // Making skip optional
   take?: number; // Making take optional
 } = {}): Promise<Case[]> => {
-  return db.case.findMany({
+  return await db.case.findMany({
     select: {
       id: true,
       title: true,
       description: true,
       riskStatus: true,
       riskScore: true,
+      assigneeId: true,
       threatPageUrl: true,
       createdAt: true,
       assignedAt: true,
@@ -32,7 +34,7 @@ export const getCaseList = async ({
 };
 
 export const getCase = async (id: string): Promise<Case | null> => {
-  return db.case.findUnique({
+  return await db.case.findUnique({
     where: {
       id,
     },
@@ -40,14 +42,22 @@ export const getCase = async (id: string): Promise<Case | null> => {
 };
 
 export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
-  const { title, description, riskStatus, riskScore, threatPageUrl } = caseItem;
+  const {
+    title,
+    description,
+    riskStatus,
+    riskScore,
+    assigneeId,
+    threatPageUrl,
+  } = caseItem;
 
-  return db.case.create({
+  return await db.case.create({
     data: {
       title,
       description,
       riskStatus,
       riskScore,
+      assigneeId,
       threatPageUrl,
     },
     select: {
@@ -56,6 +66,7 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
       description: true,
       riskStatus: true,
       riskScore: true,
+      assigneeId: true,
       threatPageUrl: true,
     },
   });
@@ -65,9 +76,16 @@ export const updateCase = async (
   caseItem: Omit<Case, "id">,
   id: string
 ): Promise<Case> => {
-  const { title, description, riskStatus, riskScore, threatPageUrl } = caseItem;
+  const {
+    title,
+    description,
+    riskStatus,
+    riskScore,
+    assigneeId,
+    threatPageUrl,
+  } = caseItem;
 
-  return db.case.update({
+  return await db.case.update({
     where: {
       id,
     },
@@ -76,6 +94,7 @@ export const updateCase = async (
       description,
       riskStatus,
       riskScore,
+      assigneeId,
       threatPageUrl,
     },
     select: {
@@ -84,6 +103,7 @@ export const updateCase = async (
       description: true,
       riskStatus: true,
       riskScore: true,
+      assigneeId: true,
       threatPageUrl: true,
     },
   });

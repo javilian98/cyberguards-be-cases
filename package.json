@@ -8,9 +8,10 @@
   },
   "scripts": {
     "dev": "nodemon src/index.ts",
+    "test": "vitest",
     "docker:up": "docker compose -f ci/compose.test.yaml up -d --build",
     "docker:down": "docker-compose down",
-    "test": "npm run docker:up && npx prisma migrate deploy && vitest -i"
+    "test-docker": "npm run docker:up && npx prisma migrate deploy && vitest -i"
   },
   "keywords": [],
   "author": "",
