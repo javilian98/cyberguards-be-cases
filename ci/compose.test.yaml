@@ -1,3 +1,6 @@
+# Set the version of docker compose to use
+version: "3.9"
+
 services:
   ####################################
   # mysql database
@@ -6,10 +9,10 @@ services:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: cyberguards_db_cases
+      MYSQL_DATABASE: cyberguards_db_cases_test
 
   ##################################
-  # Pytest on Games Service
+  # Integration Testing with Case Service
   ##################################
   case_service:
     build:
@@ -18,4 +21,7 @@ services:
     depends_on:
       - mysql
     environment:
-      CASE_DATABASE_URL: "mysql://root:root@mysql:3306/cyberguards_db_cases?schema=public"
+      CASE_SERVICE_PORT: 10000
+      CASE_DATABASE_URL: "mysql://root:root@mysql:3306/cyberguards_db_cases_test?schema=public"
+    env_file:
+      - "../.env"
