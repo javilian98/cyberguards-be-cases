@@ -34,6 +34,7 @@ caseRouter.get(
       };
 
       const cases = await CaseService.getCaseList(queries);
+
       return response.status(200).json(cases);
     } catch (error: any) {
       console.log(error);

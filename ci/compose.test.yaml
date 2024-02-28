@@ -1,4 +1,3 @@
-# Set the version of docker compose to use
 version: "3.9"
 
 services:
@@ -6,10 +5,14 @@ services:
   # mysql database
   ####################################
   mysql:
+    container_name: mysql
     image: mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: cyberguards_db_cases_test
+    ports:
+      - 3307:3306
 
   ##################################
   # Integration Testing with Case Service
@@ -18,10 +21,10 @@ services:
     build:
       context: ../
       dockerfile: ci/Dockerfile.test
+    environment:
+      #   CASE_SERVICE_PORT: 10000
+      - DATABASE_URL=mysql://root:root@host.docker.internal:3307/cyberguards_db_cases_test?schema=public
     depends_on:
       - mysql
-    environment:
-      CASE_SERVICE_PORT: 10000
-      CASE_DATABASE_URL: "mysql://root:root@mysql:3306/cyberguards_db_cases_test?schema=public"
-    env_file:
-      - "../.env"
+    # env_file:
+    #   - "../.env"
