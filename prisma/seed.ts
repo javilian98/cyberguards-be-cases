@@ -40,6 +40,7 @@ function getCases(): Case[] {
       riskStatus: "high",
       riskScore: 85,
       threatPageUrl: "https://youtube.com",
+      assigneeId: "12457c20-4a28-4617-94f3-ad86d30133b7",
     },
     {
       title: "Case 2",
@@ -47,6 +48,7 @@ function getCases(): Case[] {
       riskStatus: "medium",
       riskScore: 45,
       threatPageUrl: "https://youtube.com",
+      assigneeId: "7c0e24e2-294c-4dd6-8116-92c659802c96",
     },
     {
       title: "Case 3",
