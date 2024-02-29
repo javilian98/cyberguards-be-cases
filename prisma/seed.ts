@@ -1,6 +1,7 @@
 import { db } from "../src/utils/db.server";
 
 type Case = {
+  caseStatus: number;
   title: string;
   description: string;
   riskStatus: string;
@@ -35,6 +36,7 @@ type Case = {
 function getCases(): Case[] {
   return [
     {
+      caseStatus: 1,
       title: "Case 1",
       description: "Case 1 description",
       riskStatus: "high",
@@ -43,6 +45,7 @@ function getCases(): Case[] {
       assigneeId: "12457c20-4a28-4617-94f3-ad86d30133b7",
     },
     {
+      caseStatus: 1,
       title: "Case 2",
       description: "Case 2 description",
       riskStatus: "medium",
@@ -51,6 +54,7 @@ function getCases(): Case[] {
       assigneeId: "7c0e24e2-294c-4dd6-8116-92c659802c96",
     },
     {
+      caseStatus: 1,
       title: "Case 3",
       description: "Case 3 description",
       riskStatus: "low",
@@ -64,11 +68,18 @@ async function seed() {
   try {
     await Promise.all(
       getCases().map((row) => {
-        const { title, description, riskStatus, riskScore, threatPageUrl } =
-          row;
+        const {
+          caseStatus,
+          title,
+          description,
+          riskStatus,
+          riskScore,
+          threatPageUrl,
+        } = row;
 
         return db.case.create({
           data: {
+            caseStatus,
             title,
             description,
             riskStatus,

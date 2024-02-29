@@ -12,6 +12,7 @@ datasource db {
 
 model Case {
   id              String   @id @unique @default(uuid())
+  caseStatus      Int
   title           String
   description     String
   riskStatus      String

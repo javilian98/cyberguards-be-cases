@@ -7,6 +7,7 @@ type Case = {
   riskScore: number;
   assigneeId: string | null;
   threatPageUrl: string;
+  caseStatus: number;
 };
 
 export const getCaseList = async ({
@@ -27,6 +28,7 @@ export const getCaseList = async ({
       threatPageUrl: true,
       createdAt: true,
       assignedAt: true,
+      caseStatus: true,
     },
     skip,
     take,
@@ -49,6 +51,7 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
     riskScore,
     assigneeId,
     threatPageUrl,
+    caseStatus,
   } = caseItem;
 
   return await db.case.create({
@@ -59,6 +62,7 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
       riskScore,
       assigneeId,
       threatPageUrl,
+      caseStatus,
     },
     select: {
       id: true,
@@ -68,6 +72,7 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
       riskScore: true,
       assigneeId: true,
       threatPageUrl: true,
+      caseStatus: true,
     },
   });
 };
@@ -83,6 +88,7 @@ export const updateCase = async (
     riskScore,
     assigneeId,
     threatPageUrl,
+    caseStatus,
   } = caseItem;
 
   return await db.case.update({
@@ -96,6 +102,7 @@ export const updateCase = async (
       riskScore,
       assigneeId,
       threatPageUrl,
+      caseStatus,
     },
     select: {
       id: true,
@@ -105,6 +112,7 @@ export const updateCase = async (
       riskScore: true,
       assigneeId: true,
       threatPageUrl: true,
+      caseStatus: true,
     },
   });
 };
