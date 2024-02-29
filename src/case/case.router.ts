@@ -66,6 +66,7 @@ caseRouter.post(
   body("threatPageUrl").isString(),
   body("assigneeId").isString(),
   body("suspectedUserId").isString(),
+  body("suspectTypeId").isNumeric(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -94,6 +95,7 @@ caseRouter.put(
   body("threatPageUrl").isString(),
   body("assigneeId").isString(),
   body("suspectedUserId").isString(),
+  body("suspectTypeId").isNumeric(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 

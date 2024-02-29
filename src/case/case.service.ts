@@ -9,6 +9,7 @@ type Case = {
   threatPageUrl: string;
   caseStatus: number;
   suspectedUserId: string | null;
+  suspectTypeId: number;
 };
 
 export const getCaseList = async ({
@@ -31,6 +32,7 @@ export const getCaseList = async ({
       assignedAt: true,
       caseStatus: true,
       suspectedUserId: true,
+      suspectTypeId: true,
     },
     skip,
     take,
@@ -55,6 +57,7 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
     threatPageUrl,
     caseStatus,
     suspectedUserId,
+    suspectTypeId,
   } = caseItem;
 
   return await db.case.create({
@@ -67,6 +70,7 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
       threatPageUrl,
       caseStatus,
       suspectedUserId,
+      suspectTypeId,
     },
     select: {
       id: true,
@@ -78,6 +82,7 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
       threatPageUrl: true,
       caseStatus: true,
       suspectedUserId: true,
+      suspectTypeId: true,
     },
   });
 };
@@ -95,6 +100,7 @@ export const updateCase = async (
     threatPageUrl,
     caseStatus,
     suspectedUserId,
+    suspectTypeId,
   } = caseItem;
 
   return await db.case.update({
@@ -110,6 +116,7 @@ export const updateCase = async (
       threatPageUrl,
       caseStatus,
       suspectedUserId,
+      suspectTypeId,
     },
     select: {
       id: true,
@@ -121,6 +128,7 @@ export const updateCase = async (
       threatPageUrl: true,
       caseStatus: true,
       suspectedUserId: true,
+      suspectTypeId: true,
     },
   });
 };
