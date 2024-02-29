@@ -4,6 +4,7 @@ import { db } from "../src/utils/db.server";
 // beforeAll(async () => {
 type Case = {
   id: string;
+  caseStatus: number;
   title: string;
   description: string;
   riskStatus: string;
@@ -16,6 +17,7 @@ function getCases(): Case[] {
   return [
     {
       id: "1",
+      caseStatus: 1,
       title: "Case 1",
       description: "Case 1 description",
       riskStatus: "high",
@@ -24,6 +26,7 @@ function getCases(): Case[] {
     },
     {
       id: "2",
+      caseStatus: 1,
       title: "Case 2",
       description: "Case 2 description",
       riskStatus: "medium",
@@ -32,6 +35,7 @@ function getCases(): Case[] {
     },
     {
       id: "3",
+      caseStatus: 1,
       title: "Case 34",
       description: "Case 3 description",
       riskStatus: "low",
@@ -45,12 +49,20 @@ export async function seed() {
   try {
     await Promise.all(
       getCases().map((row) => {
-        const { id, title, description, riskStatus, riskScore, threatPageUrl } =
-          row;
+        const {
+          id,
+          caseStatus,
+          title,
+          description,
+          riskStatus,
+          riskScore,
+          threatPageUrl,
+        } = row;
 
         return db.case.create({
           data: {
             id,
+            caseStatus,
             title,
             description,
             riskStatus,

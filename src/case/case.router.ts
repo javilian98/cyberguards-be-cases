@@ -55,30 +55,6 @@ caseRouter.get("/:id", async (request: Request, response: Response) => {
   }
 });
 
-caseRouter.post(
-  "/",
-  body("title").isString(),
-  body("description").isString(),
-  body("riskStatus").isString(),
-  body("riskScore").isNumeric(),
-  body("threatPageUrl").isString(),
-  async (request: Request, response: Response) => {
-    const errors = validationResult(request);
-
-    if (!errors.isEmpty()) {
-      return response.status(400).json({ errors: errors.array() });
-    }
-
-    try {
-      const caseItem = request.body;
-      const newCase = await CaseService.createCase(caseItem);
-      return response.status(201).json(newCase);
-    } catch (error: any) {
-      return response.status(500).json(error.message);
-    }
-  }
-);
-
 // POST: Create a Case
 // PARAMS: title, description, risk_status, risk_score, threat_page_url
 caseRouter.post(
@@ -89,6 +65,7 @@ caseRouter.post(
   body("riskScore").isNumeric(),
   body("threatPageUrl").isString(),
   body("assigneeId").isString(),
+  body("suspectedUserId").isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -115,6 +92,8 @@ caseRouter.put(
   body("riskStatus").isString(),
   body("riskScore").isNumeric(),
   body("threatPageUrl").isString(),
+  body("assigneeId").isString(),
+  body("suspectedUserId").isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
