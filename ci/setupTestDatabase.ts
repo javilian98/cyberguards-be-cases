@@ -11,6 +11,8 @@ type Case = {
   riskScore: number;
   threatPageUrl: string;
   assigneeId?: string;
+  suspectedUserId: string;
+  suspectTypeId: number;
 };
 
 function getCases(): Case[] {
@@ -23,6 +25,9 @@ function getCases(): Case[] {
       riskStatus: "high",
       riskScore: 85,
       threatPageUrl: "https://youtube.com",
+      assigneeId: "1",
+      suspectedUserId: "1",
+      suspectTypeId: 1,
     },
     {
       id: "2",
@@ -32,6 +37,9 @@ function getCases(): Case[] {
       riskStatus: "medium",
       riskScore: 45,
       threatPageUrl: "https://youtube.com",
+      assigneeId: "1",
+      suspectedUserId: "1",
+      suspectTypeId: 1,
     },
     {
       id: "3",
@@ -41,6 +49,9 @@ function getCases(): Case[] {
       riskStatus: "low",
       riskScore: 23,
       threatPageUrl: "https://youtube.com",
+      assigneeId: "1",
+      suspectedUserId: "1",
+      suspectTypeId: 1,
     },
   ];
 }
@@ -57,6 +68,8 @@ export async function seed() {
           riskStatus,
           riskScore,
           threatPageUrl,
+          assigneeId,
+          suspectedUserId,
         } = row;
 
         return db.case.create({
@@ -68,7 +81,8 @@ export async function seed() {
             riskStatus,
             riskScore,
             threatPageUrl,
-            // assigneeId: user1?.id,
+            assigneeId,
+            suspectedUserId,
           },
         });
       })

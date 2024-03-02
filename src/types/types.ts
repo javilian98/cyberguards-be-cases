@@ -4,7 +4,7 @@ export interface Case {
   riskStatus: "low" | "medium" | "high";
   riskScore: number;
   createdAt: string;
-  assignee?: string;
+  assigneeId?: string;
   assignedDateTime?: string;
 }
 
@@ -15,7 +15,8 @@ export interface CaseDetail {
   riskStatus: "low" | "medium" | "high";
   riskScore: number;
   createdAt?: string;
-  assignee?: string;
+  assigneeId?: string;
+  suspectedUserId?: string;
   assignedDateTime?: string;
   threatPageUrl: string;
 }
