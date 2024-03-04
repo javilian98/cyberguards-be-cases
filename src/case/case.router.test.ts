@@ -99,11 +99,11 @@ describe("Case Routes", () => {
     }
   );
 
-  // Dummy test case to get through CI
-  const sum = (a: number, b: number) => {
-    return a + b;
-  };
-  test("should add to 2", () => {
-    expect(sum(1, 2)).toBe(3);
-  });
+  // // Dummy test case to get through CI
+  // const sum = (a: number, b: number) => {
+  //   return a + b;
+  // };
+  // test("should add to 2", () => {
+  //   expect(sum(1, 2)).toBe(3);
+  // });
 });
