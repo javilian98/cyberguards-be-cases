@@ -8,6 +8,7 @@ type Case = {
   riskScore: number;
   threatPageUrl: string;
   assigneeId?: string;
+  suspectedUserId?: string;
   suspectTypeId: number;
 };
 
@@ -37,33 +38,37 @@ type Case = {
 function getCases(): Case[] {
   return [
     {
-      caseStatus: 1,
-      title: "Case 1",
-      description: "Case 1 description",
+      caseStatus: 2,
+      title: "Potential Account Sharing Over 3 Days",
+      description:
+        "A potential account sharing threat that occurred in the morning.\n\nThis threat has started since 2 days ago.",
       riskStatus: "high",
-      riskScore: 85,
-      threatPageUrl: "https://youtube.com",
-      assigneeId: "12457c20-4a28-4617-94f3-ad86d30133b7",
-      suspectTypeId: 0,
+      riskScore: 80,
+      threatPageUrl: "http://localhost:5173/threats/1",
+      assigneeId: "77e748dc-1bb4-4a16-bc0f-b44ee5d441e3",
+      suspectedUserId: "43338880-0714-498d-85d7-14d379a9dd41",
+      suspectTypeId: 2,
     },
     {
       caseStatus: 1,
-      title: "Case 2",
-      description: "Case 2 description",
+      title: "After Hour Login for the past 2 weeks",
+      description:
+        "After hour login threat usually occurred at:\n1. 8pm to 11pm, Singapore Time\n2. Logged in on every Monday, Wednesday and Friday.",
       riskStatus: "medium",
-      riskScore: 45,
-      threatPageUrl: "https://youtube.com",
+      riskScore: 60,
+      threatPageUrl: "http://localhost:5173/threats/2",
       assigneeId: "7c0e24e2-294c-4dd6-8116-92c659802c96",
-      suspectTypeId: 0,
+      suspectTypeId: 1,
     },
     {
       caseStatus: 1,
-      title: "Case 3",
-      description: "Case 3 description",
-      riskStatus: "low",
-      riskScore: 23,
-      threatPageUrl: "https://youtube.com",
-      suspectTypeId: 0,
+      title: "After Hour Login Attempts Over 1 Week",
+      description:
+        "Multiple Failed Login Attempts Over 1 Week.\n\nThis threat usually occurs at night 11.59pm (Singapore Time GMT+8).",
+      riskStatus: "medium",
+      riskScore: 50,
+      threatPageUrl: "http://localhost:5173/threats/3",
+      suspectTypeId: 1,
     },
   ];
 }
@@ -79,6 +84,8 @@ async function seed() {
           riskStatus,
           riskScore,
           threatPageUrl,
+          assigneeId,
+          suspectedUserId,
           suspectTypeId,
         } = row;
 
@@ -90,7 +97,8 @@ async function seed() {
             riskStatus,
             riskScore,
             threatPageUrl,
-            // assigneeId: user1?.id,
+            assigneeId,
+            suspectedUserId,
             suspectTypeId,
           },
         });
