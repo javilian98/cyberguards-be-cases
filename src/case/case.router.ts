@@ -65,8 +65,8 @@ caseRouter.post(
   body("riskScore").isNumeric(),
   body("threatPageUrl").isString(),
   body("assigneeId").isString().notEmpty().optional(),
-  body("suspectedUserId").isString().notEmpty().optional(),
-  body("suspectTypeId").isNumeric(),
+  // body("suspectedUserId").isString().notEmpty().optional(),
+  // body("suspectTypeId").isNumeric(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -94,8 +94,8 @@ caseRouter.put(
   body("riskScore").isNumeric(),
   body("threatPageUrl").isString(),
   body("assigneeId").isString(),
-  body("suspectedUserId").isString(),
-  body("suspectTypeId").isNumeric(),
+  // body("suspectedUserId").isString(),
+  // body("suspectTypeId").isNumeric(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
