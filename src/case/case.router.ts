@@ -20,6 +20,7 @@ caseRouter.get(
     .withMessage("Take must be a number")
     .isInt({ max: 50 })
     .withMessage("Take must be less than or equal to 50."),
+  query("logIds").optional().isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -31,6 +32,9 @@ caseRouter.get(
       const queries = {
         skip: request.query.skip ? Number(request.query.skip) : undefined,
         take: request.query.take ? Number(request.query.take) : undefined,
+        logIds: request.query.logIds
+          ? request.query.logIds.toString()
+          : undefined,
       };
 
       const cases = await CaseService.getCaseList(queries);
@@ -61,12 +65,10 @@ caseRouter.post(
   "/",
   body("title").isString(),
   body("description").isString(),
-  body("riskStatus").isString(),
   body("riskScore").isNumeric(),
   body("threatPageUrl").isString(),
   body("assigneeId").isString().notEmpty().optional(),
-  // body("suspectedUserId").isString().notEmpty().optional(),
-  // body("suspectTypeId").isNumeric(),
+  body("logId").isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -90,12 +92,10 @@ caseRouter.put(
   "/:id",
   body("title").isString(),
   body("description").isString(),
-  body("riskStatus").isString(),
   body("riskScore").isNumeric(),
   body("threatPageUrl").isString(),
-  body("assigneeId").isString(),
-  // body("suspectedUserId").isString(),
-  // body("suspectTypeId").isNumeric(),
+  body("assigneeId").isString().notEmpty().optional(),
+  body("logId").isString().notEmpty().optional(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 

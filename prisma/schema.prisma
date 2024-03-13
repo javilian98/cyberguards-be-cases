@@ -15,7 +15,7 @@ model Case {
   caseStatus      Int
   title           String
   description     String
-  riskStatus      String
+  // riskStatus      String
   riskScore       Int 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -24,6 +24,7 @@ model Case {
   suspectedUserId String?
   suspectTypeId   Int @default(0)
   threatPageUrl   String
+  logId           String?
 }
 
 // model SuspectCase {

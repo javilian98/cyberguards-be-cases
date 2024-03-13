@@ -48,12 +48,12 @@ describe("Case Routes", () => {
       caseStatus: 1,
       title: "Case 99",
       description: "Case 99 description",
-      riskStatus: "low",
       riskScore: 20,
       threatPageUrl: "https://youtube.com",
       assigneeId: "1",
       suspectedUserId: "1",
       suspectTypeId: 1,
+      logId: "255",
     };
     const response = await request(app).post(`/api/cases`).send(newCase);
 

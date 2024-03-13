@@ -3,36 +3,41 @@ import { db } from "../utils/db.server";
 type Case = {
   title: string;
   description: string;
-  riskStatus: string;
   riskScore: number;
   assigneeId: string | null;
   threatPageUrl: string;
   caseStatus: number;
-  // suspectedUserId: string | null;
-  // suspectTypeId: number;
+  logId: string | null;
 };
 
 export const getCaseList = async ({
   skip = 0,
   take = 10,
+  logIds = "",
 }: {
   skip?: number; // Making skip optional
   take?: number; // Making take optional
+  logIds?: string | undefined;
 } = {}): Promise<Case[]> => {
+  const logIdsArray = logIds == "" ? undefined : logIds.split(",");
+
   return await db.case.findMany({
+    where: {
+      logId: {
+        in: logIdsArray,
+      },
+    },
     select: {
       id: true,
       title: true,
       description: true,
-      riskStatus: true,
       riskScore: true,
       assigneeId: true,
       threatPageUrl: true,
       createdAt: true,
       assignedAt: true,
       caseStatus: true,
-      suspectedUserId: true,
-      suspectTypeId: true,
+      logId: true,
     },
     skip,
     take,
@@ -51,38 +56,33 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
   const {
     title,
     description,
-    riskStatus,
+    // riskStatus,
     riskScore,
     assigneeId,
     threatPageUrl,
     caseStatus,
-    // suspectedUserId,
-    // suspectTypeId,
+    logId,
   } = caseItem;
 
   return await db.case.create({
     data: {
       title,
       description,
-      riskStatus,
       riskScore,
       assigneeId,
       threatPageUrl,
       caseStatus,
-      // suspectedUserId,
-      // suspectTypeId,
+      logId,
     },
     select: {
       id: true,
       title: true,
       description: true,
-      riskStatus: true,
       riskScore: true,
       assigneeId: true,
       threatPageUrl: true,
       caseStatus: true,
-      // suspectedUserId: true,
-      // suspectTypeId: true,
+      logId: true,
     },
   });
 };
@@ -94,13 +94,11 @@ export const updateCase = async (
   const {
     title,
     description,
-    riskStatus,
     riskScore,
     assigneeId,
     threatPageUrl,
     caseStatus,
-    // suspectedUserId,
-    // suspectTypeId,
+    logId,
   } = caseItem;
 
   return await db.case.update({
@@ -110,25 +108,21 @@ export const updateCase = async (
     data: {
       title,
       description,
-      riskStatus,
       riskScore,
       assigneeId,
       threatPageUrl,
       caseStatus,
-      // suspectedUserId,
-      // suspectTypeId,
+      logId,
     },
     select: {
       id: true,
       title: true,
       description: true,
-      riskStatus: true,
       riskScore: true,
       assigneeId: true,
       threatPageUrl: true,
       caseStatus: true,
-      // suspectedUserId: true,
-      // suspectTypeId: true,
+      logId: true,
     },
   });
 };
