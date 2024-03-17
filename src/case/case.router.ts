@@ -20,7 +20,6 @@ caseRouter.get(
     .withMessage("Take must be a number")
     .isInt({ max: 50 })
     .withMessage("Take must be less than or equal to 50."),
-  query("logIds").optional().isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -32,9 +31,6 @@ caseRouter.get(
       const queries = {
         skip: request.query.skip ? Number(request.query.skip) : undefined,
         take: request.query.take ? Number(request.query.take) : undefined,
-        logIds: request.query.logIds
-          ? request.query.logIds.toString()
-          : undefined,
       };
 
       const cases = await CaseService.getCaseList(queries);
@@ -59,6 +55,23 @@ caseRouter.get("/:id", async (request: Request, response: Response) => {
   }
 });
 
+caseRouter.get(
+  "/employee/:id",
+  async (request: Request, response: Response) => {
+    try {
+      const singleCase = await CaseService.getCaseByEmployeeId(
+        request.params.id
+      );
+      if (!singleCase) {
+        return response.status(404).json("Case cannot be not found.");
+      }
+      return response.status(200).json(singleCase);
+    } catch (error: any) {
+      return response.status(500).json(error.message);
+    }
+  }
+);
+
 // POST: Create a Case
 // PARAMS: title, description, risk_status, risk_score, threat_page_url
 caseRouter.post(
@@ -66,9 +79,8 @@ caseRouter.post(
   body("title").isString(),
   body("description").isString(),
   body("riskScore").isNumeric(),
-  body("threatPageUrl").isString(),
   body("assigneeId").isString().notEmpty().optional(),
-  body("logId").isString(),
+  body("employeeId").isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 
@@ -93,9 +105,8 @@ caseRouter.put(
   body("title").isString(),
   body("description").isString(),
   body("riskScore").isNumeric(),
-  body("threatPageUrl").isString(),
   body("assigneeId").isString().notEmpty().optional(),
-  body("logId").isString().notEmpty().optional(),
+  body("employeeId").isString(),
   async (request: Request, response: Response) => {
     const errors = validationResult(request);
 

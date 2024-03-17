@@ -5,39 +5,30 @@ type Case = {
   description: string;
   riskScore: number;
   assigneeId: string | null;
-  threatPageUrl: string;
+  // threatPageUrl: string;
   caseStatus: number;
-  logId: string | null;
+  employeeId: string | null;
 };
 
 export const getCaseList = async ({
   skip = 0,
   take = 10,
-  logIds = "",
 }: {
   skip?: number; // Making skip optional
   take?: number; // Making take optional
-  logIds?: string | undefined;
 } = {}): Promise<Case[]> => {
-  const logIdsArray = logIds == "" ? undefined : logIds.split(",");
-
   return await db.case.findMany({
-    where: {
-      logId: {
-        in: logIdsArray,
-      },
-    },
     select: {
       id: true,
       title: true,
       description: true,
       riskScore: true,
       assigneeId: true,
-      threatPageUrl: true,
+      // threatPageUrl: true,
       createdAt: true,
       assignedAt: true,
       caseStatus: true,
-      logId: true,
+      employeeId: true,
     },
     skip,
     take,
@@ -52,6 +43,16 @@ export const getCase = async (id: string): Promise<Case | null> => {
   });
 };
 
+export const getCaseByEmployeeId = async (
+  employeeId: string
+): Promise<Case | null> => {
+  return await db.case.findFirst({
+    where: {
+      employeeId,
+    },
+  });
+};
+
 export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
   const {
     title,
@@ -59,9 +60,9 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
     // riskStatus,
     riskScore,
     assigneeId,
-    threatPageUrl,
+    // threatPageUrl,
     caseStatus,
-    logId,
+    employeeId,
   } = caseItem;
 
   return await db.case.create({
@@ -70,9 +71,9 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
       description,
       riskScore,
       assigneeId,
-      threatPageUrl,
+      // threatPageUrl,
       caseStatus,
-      logId,
+      employeeId,
     },
     select: {
       id: true,
@@ -80,9 +81,9 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
       description: true,
       riskScore: true,
       assigneeId: true,
-      threatPageUrl: true,
+      // threatPageUrl: true,
       caseStatus: true,
-      logId: true,
+      employeeId: true,
     },
   });
 };
@@ -96,9 +97,9 @@ export const updateCase = async (
     description,
     riskScore,
     assigneeId,
-    threatPageUrl,
+    // threatPageUrl,
     caseStatus,
-    logId,
+    employeeId,
   } = caseItem;
 
   return await db.case.update({
@@ -110,9 +111,9 @@ export const updateCase = async (
       description,
       riskScore,
       assigneeId,
-      threatPageUrl,
+      // threatPageUrl,
       caseStatus,
-      logId,
+      employeeId,
     },
     select: {
       id: true,
@@ -120,9 +121,9 @@ export const updateCase = async (
       description: true,
       riskScore: true,
       assigneeId: true,
-      threatPageUrl: true,
+      // threatPageUrl: true,
       caseStatus: true,
-      logId: true,
+      employeeId: true,
     },
   });
 };
