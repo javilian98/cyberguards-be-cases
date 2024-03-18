@@ -21,10 +21,13 @@ model Case {
   assigneeId      String?  
   assignedAt      DateTime?
   employeeId      String?
-  // threatPageUrl   String
 }
 
-// model SuspectCase {
-//   id Int        @id @unique
-//   title String      @unique
-// }
+model CaseAuditLog {
+  id          String @id @unique @default(uuid())
+  caseId      String
+  assigneeId  String?
+  action      String
+  edits       String
+  createdAt   DateTime @default(now())
+}

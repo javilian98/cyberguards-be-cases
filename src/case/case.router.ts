@@ -137,3 +137,63 @@ caseRouter.delete("/:id", async (request: Request, response: Response) => {
     return response.status(500).json(error.message);
   }
 });
+
+caseRouter.get(
+  "/logs/case_audit_logs",
+  query("skip")
+    .optional()
+    .isNumeric()
+    .toInt()
+    .withMessage("Skip must be a number"),
+  query("take")
+    .optional()
+    .isNumeric()
+    .toInt()
+    .withMessage("Take must be a number")
+    .isInt({ max: 50 })
+    .withMessage("Take must be less than or equal to 50."),
+  async (request: Request, response: Response) => {
+    const errors = validationResult(request);
+
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const queries = {
+        skip: request.query.skip ? Number(request.query.skip) : undefined,
+        take: request.query.take ? Number(request.query.take) : undefined,
+      };
+
+      const cases = await CaseService.getCaseAuditLogList(queries);
+
+      return response.status(200).json(cases);
+    } catch (error: any) {
+      console.log(error);
+      return response.status(500).json(error.message);
+    }
+  }
+);
+
+caseRouter.post(
+  "/case_audit_logs",
+  body("caseId").isString(),
+  body("assigneeId").isString().notEmpty().optional(),
+  body("action").isString(),
+  body("edits").isString(),
+  async (request: Request, response: Response) => {
+    const errors = validationResult(request);
+
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const log = request.body;
+      const newLog = await CaseService.createCaseAuditLog(log);
+      return response.status(201).json(newLog);
+    } catch (error: any) {
+      return response.status(500).json(error.message);
+    }
+  }
+);

@@ -10,6 +10,14 @@ type Case = {
   employeeId: string | null;
 };
 
+type CaseAuditLog = {
+  id: string;
+  caseId: string;
+  assigneeId: string | null;
+  action: string;
+  edits: string;
+};
+
 export const getCaseList = async ({
   skip = 0,
   take = 10,
@@ -24,7 +32,6 @@ export const getCaseList = async ({
       description: true,
       riskScore: true,
       assigneeId: true,
-      // threatPageUrl: true,
       createdAt: true,
       assignedAt: true,
       caseStatus: true,
@@ -132,6 +139,52 @@ export const deleteCase = async (id: string): Promise<void> => {
   await db.case.delete({
     where: {
       id,
+    },
+  });
+};
+
+export const getCaseAuditLogList = async ({
+  skip = 0,
+  take = 10,
+}: {
+  skip?: number; // Making skip optional
+  take?: number; // Making take optional
+} = {}): Promise<CaseAuditLog[]> => {
+  return await db.caseAuditLog.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      caseId: true,
+      assigneeId: true,
+      action: true,
+      edits: true,
+      createdAt: true,
+    },
+    skip,
+    take,
+  });
+};
+
+export const createCaseAuditLog = async (
+  log: Omit<CaseAuditLog, "id">
+): Promise<CaseAuditLog> => {
+  const { caseId, assigneeId, action, edits } = log;
+
+  return await db.caseAuditLog.create({
+    data: {
+      caseId,
+      assigneeId,
+      action,
+      edits,
+    },
+    select: {
+      id: true,
+      caseId: true,
+      assigneeId: true,
+      action: true,
+      edits: true,
     },
   });
 };
