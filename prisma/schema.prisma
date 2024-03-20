@@ -28,6 +28,6 @@ model CaseAuditLog {
   caseId      String
   assigneeId  String?
   action      String
-  edits       String
+  edits       String?
   createdAt   DateTime @default(now())
 }

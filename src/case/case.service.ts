@@ -15,7 +15,7 @@ type CaseAuditLog = {
   caseId: string;
   assigneeId: string | null;
   action: string;
-  edits: string;
+  edits: string | null;
 };
 
 export const getCaseList = async ({
