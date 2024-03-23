@@ -5,4 +5,11 @@ COPY prisma ./prisma/
 RUN npm install
 COPY . .
 EXPOSE 10000
-CMD ["npm", "run", "dev"]
+# CMD ["npm", "run", "dev"]
+
+# Copy and allow running migrate-and-start.sh script
+COPY migrate-and-start.sh ./
+RUN chmod +x migrate-and-start.sh
+
+# Execute the script
+CMD ["./migrate-and-start.sh"]

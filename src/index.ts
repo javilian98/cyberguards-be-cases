@@ -1,11 +1,9 @@
 import * as dotenv from "dotenv";
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import { caseRouter } from "./case/case.router";
 
 dotenv.config();
-
-console.log("Case Service Port: ", process.env.CASE_SERVICE_PORT);
 
 if (!process.env.CASE_SERVICE_PORT) {
   process.exit(1);
@@ -19,6 +17,11 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/cases", caseRouter);
 
-app.listen(PORT, () => {
+app.get("/health", (request: Request, response: Response) => {
+  console.log("Case Microservice is working!");
+  return response.send("Case Microservice is working!");
+});
+
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Listening on port ${PORT}`);
 });
