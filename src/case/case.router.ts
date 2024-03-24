@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import { body, query, validationResult } from "express-validator";
 
 import * as CaseService from "./case.service";
+import { Case } from "../types/types";
 
 export const caseRouter = express.Router();
 
@@ -33,7 +34,7 @@ caseRouter.get(
         take: request.query.take ? Number(request.query.take) : undefined,
       };
 
-      const cases = await CaseService.getCaseList(queries);
+      const cases: Case[] = await CaseService.getCaseList(queries);
 
       return response.status(200).json(cases);
     } catch (error: any) {
@@ -45,7 +46,10 @@ caseRouter.get(
 
 caseRouter.get("/:id", async (request: Request, response: Response) => {
   try {
-    const singleCase = await CaseService.getCase(request.params.id);
+    const singleCase: Case = (await CaseService.getCase(
+      request.params.id
+    )) as Case;
+
     if (!singleCase) {
       return response.status(404).json("Case cannot be not found.");
     }
@@ -59,9 +63,9 @@ caseRouter.get(
   "/employee/:id",
   async (request: Request, response: Response) => {
     try {
-      const singleCase = await CaseService.getCaseByEmployeeId(
+      const singleCase: Case = (await CaseService.getCaseByEmployeeId(
         request.params.id
-      );
+      )) as Case;
       if (!singleCase) {
         return response.status(404).json("Case cannot be not found.");
       }
@@ -79,6 +83,7 @@ caseRouter.post(
   body("title").isString(),
   body("description").isString(),
   body("riskScore").isNumeric(),
+  body("caseStatus").isNumeric().notEmpty().optional(),
   body("assigneeId").isString().notEmpty().optional(),
   body("employeeId").isString(),
   async (request: Request, response: Response) => {
@@ -89,7 +94,7 @@ caseRouter.post(
     }
 
     try {
-      const caseItem = request.body;
+      const caseItem: Case = request.body;
       const newCase = await CaseService.createCase(caseItem);
       return response.status(201).json(newCase);
     } catch (error: any) {
@@ -105,6 +110,7 @@ caseRouter.put(
   body("title").isString(),
   body("description").isString(),
   body("riskScore").isNumeric(),
+  body("caseStatus").isNumeric().notEmpty().optional(),
   body("assigneeId").isString().notEmpty().optional(),
   body("employeeId").isString(),
   async (request: Request, response: Response) => {
@@ -115,8 +121,8 @@ caseRouter.put(
     }
 
     try {
-      const caseItem = request.body;
-      const updatedCase = await CaseService.updateCase(
+      const caseItem: Case = request.body;
+      const updatedCase: Case = await CaseService.updateCase(
         caseItem,
         request.params.id
       );

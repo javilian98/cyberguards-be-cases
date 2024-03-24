@@ -5,7 +5,7 @@ import { beforeAll, afterAll, describe, expect, test } from "vitest";
 import { db } from "../../src/utils/db.server";
 import { seed } from "../../ci/setupTestDatabase";
 
-import { CaseDetail } from "../types/types";
+import { Case } from "../types/types";
 
 beforeAll(async () => {
   await seed();
@@ -34,7 +34,7 @@ describe("Case Routes", () => {
     const id = "1";
     const response = await request(app).get(`/api/cases/${id}`);
 
-    const data: CaseDetail = response.body;
+    const data: Case = response.body;
 
     expect(response.status).toBe(200);
     expect(typeof response.body).toBe("object");
@@ -43,7 +43,7 @@ describe("Case Routes", () => {
   });
 
   test.sequential("POST api/cases should create a new case", async () => {
-    const newCase = {
+    const newCase: Case = {
       id: "99",
       caseStatus: 1,
       title: "Case 99",
@@ -57,7 +57,7 @@ describe("Case Routes", () => {
     };
     const response = await request(app).post(`/api/cases`).send(newCase);
 
-    const data: CaseDetail = response.body;
+    const data: Case = response.body;
 
     expect(response.status).toBe(201);
     expect(typeof response.body).toBe("object");
@@ -70,7 +70,7 @@ describe("Case Routes", () => {
       const id = "1";
       const response = await request(app).get(`/api/cases/${id}`);
 
-      const data: CaseDetail = response.body;
+      const data: Case = response.body;
       console.log("put: data ", data);
 
       const updatedDataBody = { ...data, title: "Case 1 updated" };
@@ -79,7 +79,7 @@ describe("Case Routes", () => {
         .put(`/api/cases/${id}`)
         .send(updatedDataBody);
 
-      const updatedData: CaseDetail = updatedDataResponse.body;
+      const updatedData: Case = updatedDataResponse.body;
 
       console.log("updatedDataResponse log >> ", updatedDataResponse.body);
 

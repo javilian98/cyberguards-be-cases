@@ -1,22 +1,40 @@
-export interface Case {
-  id: string;
-  title: string;
-  riskScore: number;
-  createdAt: string;
-  assigneeId?: string;
-  assignedDateTime?: string;
-}
+// export interface Case {
+//   id: string;
+//   title: string;
+//   riskScore: number;
+//   createdAt: string;
+//   assigneeId: string;
+//   caseStatus: number;
+//   assignedDateTime?: string;
+//   employeeId: string;
+// }
 
-export interface CaseDetail {
-  id: string;
+// export interface CaseDetail {
+//   id: string;
+//   title: string;
+//   description: string;
+//   riskScore: number;
+//   createdAt?: string;
+//   caseStatus: number;
+//   assigneeId?: string;
+//   employeeId: string;
+// }
+
+export interface Case {
   title: string;
   description: string;
   riskScore: number;
-  createdAt?: string;
-  assigneeId?: string;
-  suspectedUserId?: string;
-  assignedDateTime?: string;
-  threatPageUrl: string;
+  assigneeId: string | null;
+  caseStatus: number;
+  employeeId: string | null;
+}
+
+export interface CaseAuditLog {
+  id: string;
+  caseId: string;
+  assigneeId: string | null;
+  action: string;
+  edits: string | null;
 }
 
 export interface UserListItem {

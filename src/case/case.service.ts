@@ -1,22 +1,5 @@
+import { Case, CaseAuditLog } from "../types/types";
 import { db } from "../utils/db.server";
-
-type Case = {
-  title: string;
-  description: string;
-  riskScore: number;
-  assigneeId: string | null;
-  // threatPageUrl: string;
-  caseStatus: number;
-  employeeId: string | null;
-};
-
-type CaseAuditLog = {
-  id: string;
-  caseId: string;
-  assigneeId: string | null;
-  action: string;
-  edits: string | null;
-};
 
 export const getCaseList = async ({
   skip = 0,
@@ -61,16 +44,8 @@ export const getCaseByEmployeeId = async (
 };
 
 export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
-  const {
-    title,
-    description,
-    // riskStatus,
-    riskScore,
-    assigneeId,
-    // threatPageUrl,
-    caseStatus,
-    employeeId,
-  } = caseItem;
+  const { title, description, riskScore, assigneeId, caseStatus, employeeId } =
+    caseItem;
 
   return await db.case.create({
     data: {
@@ -78,7 +53,6 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
       description,
       riskScore,
       assigneeId,
-      // threatPageUrl,
       caseStatus,
       employeeId,
     },
@@ -88,7 +62,6 @@ export const createCase = async (caseItem: Omit<Case, "id">): Promise<Case> => {
       description: true,
       riskScore: true,
       assigneeId: true,
-      // threatPageUrl: true,
       caseStatus: true,
       employeeId: true,
     },
@@ -99,15 +72,8 @@ export const updateCase = async (
   caseItem: Omit<Case, "id">,
   id: string
 ): Promise<Case> => {
-  const {
-    title,
-    description,
-    riskScore,
-    assigneeId,
-    // threatPageUrl,
-    caseStatus,
-    employeeId,
-  } = caseItem;
+  const { title, description, riskScore, assigneeId, caseStatus, employeeId } =
+    caseItem;
 
   return await db.case.update({
     where: {
@@ -118,7 +84,6 @@ export const updateCase = async (
       description,
       riskScore,
       assigneeId,
-      // threatPageUrl,
       caseStatus,
       employeeId,
     },
@@ -128,7 +93,6 @@ export const updateCase = async (
       description: true,
       riskScore: true,
       assigneeId: true,
-      // threatPageUrl: true,
       caseStatus: true,
       employeeId: true,
     },
