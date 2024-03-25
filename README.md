@@ -87,14 +87,14 @@ npm run dev
 
 2. Start your Docker Desktop app
 3. Make sure you are in the cyberguards-be-cases directory
+4. To run the tests, run the following command:
 
 ```
 npm run docker:up
 ```
 
-4. Make sure you are in the cyberguards-frontend directory
-5. To run the tests, run the following command:
+5. To stop running the tests, run the following command:
 
 ```
-npm run test
+npm run docker:down
 ```
